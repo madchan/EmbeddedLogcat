@@ -1,0 +1,3 @@
+include ':comp_logcat'
+include ':app'
+rootProject.name = "EmbeddedLogcat"
