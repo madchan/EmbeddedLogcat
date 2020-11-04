@@ -10,7 +10,9 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 
-
+/**
+ * 日志输出页面
+ */
 class LogcatActivity : AppCompatActivity() {
 
     private lateinit var process: Spinner
@@ -96,6 +98,7 @@ class LogcatActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.clear).setOnClickListener {
             content.text = ""
+            LogcatExecutor.clear()
         }
         findViewById<ImageView>(R.id.scroll_to_end).setOnClickListener{
             scroller.fullScroll(ScrollView.FOCUS_DOWN)

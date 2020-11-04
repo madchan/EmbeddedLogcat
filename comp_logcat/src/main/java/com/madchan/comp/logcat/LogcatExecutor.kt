@@ -35,18 +35,26 @@ object LogcatExecutor {
         handler.stopOutputThread()
     }
 
+    fun clear() {
+        handler.startClearThread()
+    }
+
     class LogcatHandler(looper: Looper) : Handler(looper) {
 
         companion object {
             const val MSG_START = 1
+            const val MSG_CLEAR = 2
             const val INTERVAL_TIME = 1000L
         }
 
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_START -> {
-                    execLogcatCommand(command)
+                    execOutputCommand(command)
                     sendEmptyMessageDelayed(MSG_START, INTERVAL_TIME)
+                }
+                MSG_CLEAR -> {
+                    execClearCommand()
                 }
                 else -> throw IllegalArgumentException("Unknown what = $msg.what")
             }
@@ -60,10 +68,14 @@ object LogcatExecutor {
             removeMessages(MSG_START)
         }
 
+        fun startClearThread() {
+            sendEmptyMessage(MSG_CLEAR)
+        }
+
         /**
-         * 执行Logcat命令行工具
+         * 执行日志输出命令行
          */
-        private fun execLogcatCommand(command: Command?) {
+        private fun execOutputCommand(command: Command?) {
             try {
                 val command = command?.toString() ?: "logcat -d"
                 val process = Runtime.getRuntime().exec(command)
@@ -84,6 +96,13 @@ object LogcatExecutor {
                 Log.e("LogcatHandler", "执行Logcat命令行失败：" + e.message)
             }
 
+        }
+
+        /**
+         * 执行日志清除命令行
+         */
+        private fun execClearCommand() {
+            Runtime.getRuntime().exec("logcat -c")
         }
     }
 
