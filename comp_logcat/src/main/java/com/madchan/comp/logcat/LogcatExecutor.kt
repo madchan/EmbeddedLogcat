@@ -42,13 +42,21 @@ object LogcatExecutor {
     class LogcatHandler(looper: Looper) : Handler(looper) {
 
         companion object {
-            const val MSG_START = 1
-            const val MSG_CLEAR = 2
+            const val MSG_INIT = 1
+            const val MSG_START = 2
+            const val MSG_CLEAR = 3
             const val INTERVAL_TIME = 1000L
+        }
+
+        init {
+            sendEmptyMessage(MSG_INIT)
         }
 
         override fun handleMessage(msg: Message) {
             when (msg.what) {
+                MSG_INIT -> {
+                    execSetBufferSizeCommand()
+                }
                 MSG_START -> {
                     execOutputCommand(command)
                     sendEmptyMessageDelayed(MSG_START, INTERVAL_TIME)
@@ -61,6 +69,7 @@ object LogcatExecutor {
         }
 
         fun startOutputThread() {
+            if(hasMessages(MSG_START)) removeMessages(MSG_START)
             sendEmptyMessage(MSG_START)
         }
 
@@ -72,9 +81,10 @@ object LogcatExecutor {
             sendEmptyMessage(MSG_CLEAR)
         }
 
-        /**
-         * 执行日志输出命令行
-         */
+        private fun execSetBufferSizeCommand() {
+            Runtime.getRuntime().exec("logcat -G 100M")
+        }
+
         private fun execOutputCommand(command: Command?) {
             try {
                 val command = command?.toString() ?: "logcat -d"
@@ -98,9 +108,6 @@ object LogcatExecutor {
 
         }
 
-        /**
-         * 执行日志清除命令行
-         */
         private fun execClearCommand() {
             Runtime.getRuntime().exec("logcat -c")
         }
