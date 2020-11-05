@@ -43,5 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation project(":comp_logcat")
+//    implementation project(":comp_logcat")
+    implementation 'com.madchan.library:embeddedlogcat:1.0.0'
 }
