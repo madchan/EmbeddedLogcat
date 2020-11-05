@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -44,25 +43,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-ext {
-    // WorkManager
-    work_manager_version = "2.4.0"
-}
-
-dependencies {
-    // WorkManager
-    api "androidx.work:work-runtime:$work_manager_version"
-    api "androidx.work:work-runtime-ktx:$work_manager_version"
-}
-
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    //repoName = 'maven'//仓库名
-    userOrg = 'madchan'//用户名
-    groupId = 'com.madchan.library'//生成的gradle依赖前缀。
-    artifactId = 'embeddedlogcat'//项目名
-    publishVersion = '1.0.0' //版本号
-    desc = 'android code' //描述
-    website = 'https://github.com/madchan/EmbeddedLogcat'
-    repository = 'https://github.com/madchan/EmbeddedLogcat.git'
-}
+//apply plugin: 'com.novoda.bintray-release'
+//publish {
+//    //repoName = 'maven'//仓库名
+//    userOrg = 'madchan'//用户名
+//    groupId = 'com.madchan.library'//生成的gradle依赖前缀。
+//    artifactId = 'embeddedlogcat'//项目名
+//    publishVersion = '1.0.0' //版本号
+//    desc = 'android code' //描述
+//    website = 'https://github.com/madchan/EmbeddedLogcat'
+//    repository = 'https://github.com/madchan/EmbeddedLogcat.git'
+//}
